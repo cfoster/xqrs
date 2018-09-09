@@ -4,8 +4,6 @@ XQRS: XQuery API for RESTful Web Services is a RESTXQ implementation for MarkLog
 
 It's fast, scales and is light weight at around 1.1k lines of code. You can seamlessly add it to your existing project without it interfering. Support is available on GitHub. RESTXQ enables you to build RESTful services declaratively with XQuery Annotations in the same way as JAX-RS does for Java.
 
-
-
 * Supports Read Only / Update Functions
 * Supports Multi-Statement Transactions
 * Supports Multiple-File uploads from HTML5 Forms
@@ -44,4 +42,5 @@ function list-wheels() {
   <wheels>{
     fn:collection("wheels")
   }</wheels>
-};```w
+};
+```
