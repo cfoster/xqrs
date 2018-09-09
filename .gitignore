@@ -1,0 +1,5 @@
+xqrs-test.xqy
+ignore
+target
+test-suite/scala/target
+.idea
