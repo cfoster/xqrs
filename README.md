@@ -1,18 +1,18 @@
-# XQRS
+# [XQRS](http://consulting.xmllondon.com/xqrs) - XQuery API for RESTful Web Services
 <img align="right" src="http://consulting.xmllondon.com/images/xqrs.svg">
-XQRS: XQuery API for RESTful Web Services is a RESTXQ implementation for MarkLogic Server.
+XQRS is a RESTXQ implementation for MarkLogic Server.
 
 It's fast, scales and is light weight at around 1.1k lines of code. You can seamlessly add it to your existing project without it interfering. Support is available on GitHub. RESTXQ enables you to build RESTful services declaratively with XQuery Annotations in the same way as JAX-RS does for Java.
 
-* Supports Read Only / Update Functions
-* Supports Multi-Statement Transactions
-* Supports Multiple-File uploads from HTML5 Forms
-* Supports multipart/mixed requests
+* Supports [Read Only / Update Functions](http://consulting.xmllondon.com/xqrs/docs/update-transactions)
+* Supports [Multi-Statement Transactions](http://consulting.xmllondon.com/xqrs/docs/multi-statement-transactions)
+* Supports [Multiple-File uploads from HTML5 Forms](http://consulting.xmllondon.com/xqrs/docs/form-file-uploads)
+* Supports [multipart/mixed requests](http://consulting.xmllondon.com/xqrs/docs/post-put-body#multipart-types)
 * Supports XML, JSON, RDF (all formats), SPARQL Results (all formats)
-* Supports Path expressions defined by Regular Expressions
-* Supports Content Negotiation and Quality Factors in Accept Headers
+* Supports [Path expressions defined by Regular Expressions](http://consulting.xmllondon.com/xqrs/docs/paths)
+* Supports [Content Negotiation and Quality Factors in Accept Headers](http://consulting.xmllondon.com/xqrs/docs/content-negotiation)
 * Well Documented with plenty of examples
-* Supports Error Handler Functions
+* Supports [Error Handler Functions](http://consulting.xmllondon.com/xqrs/docs/error-handling)
 * Very Robust. Built against a very rich Test Suite
 * 100% Free, Open Source, Apache 2.0 Licence
 
