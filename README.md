@@ -44,3 +44,137 @@ function list-wheels() {
   }</wheels>
 };
 ```
+
+## Basic Examples
+
+There are some basic examples here on this GitHub README. Full Documentation is [available on the website](http://consulting.xmllondon.com/xqrs/docs).
+
+### Regular Expressions in Paths
+```xquery
+declare
+%rest:path("/control-suffix/{$a}/{$b=.+}")
+function control-suffix($a as xs:string, $b as xs:string) as xs:string {
+  string-join(($a, $b), ',')
+};
+
+declare
+  %rest:path("{$entire-uri=.+}")
+function total-control($entire-uri as xs:string) {
+  $entire-uri
+};
+```
+
+### Selecting function by Method
+Method Annotations `GET`, `HEAD`, `POST`, `PUT`, `DELETE`, `OPTIONS`, `PATCH`
+```xquery
+declare
+  %rest:path("/factory/warehouse/wheel/{$wheel-id}")
+  %rest:POST
+function put($wheel-id as xs:string) {
+  create-wheel($wheel-id)
+};
+
+declare
+  %rest:path("/factory/warehouse/wheel/{$wheel-id}")
+  %rest:DELETE
+function delete($delete-id as xs:string) {
+  delete-wheel($wheel-id)
+};
+
+declare
+  %rest:path("/factory/warehouse/wheel/{$wheel-id}")
+  %rest:GET
+function get($delete-id as xs:string) {
+  get-wheel($wheel-id)
+};
+```
+
+### PUT and POST Content
+```xquery
+declare
+  %rest:path("/query-some-triples")
+  %rest:POST("{$rdf-data}")
+function query-some-triples($rdf as sem:triple*) {
+  sem:sparql(
+    "SELECT * WHERE { ?a ?b ?c }", (), (),
+    sem:in-memory-store($rdf)
+  )
+};
+
+declare
+  %rest:path("/{$uri}")
+  %rest:PUT("{$json-data}")
+function insert-json($json-data as document-node(object-node()), $uri as xs:string) {
+  xdmp:document-insert($uri, $json-data),
+  "Thanks"
+};
+```
+
+### Content Negotiation
+
+```xquery
+declare
+  %rest:path("/get-resource")
+  %rest:produces("application/json") (: Client Accept Header :)
+function json-response() {
+  array-node { 1, 2, 3, 4 }
+};
+
+declare
+  %rest:path("/get-resource")
+  %rest:produces("text/xml", "application/xml") (: Client Accept Header :)
+function xml-response() {
+  <data>
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+  </data>
+};
+```
+
+### Query Params
+
+```xquery
+declare
+  %rest:path("/search")
+  %rest:query-param-1('query', '{$q}')
+  %rest:query-param-2('from', '{$from}', 1)
+  %rest:query-param-3('to', '{$to}', 10)
+function perform-search(
+  $q as xs:string,
+  $from as xs:integer,
+  $to as xs:integer) {
+  <results>{
+    cts:search(fn:doc(), cts:parse($q))[$from to $to]
+  }</results>
+};
+```
+
+### Output Serialization
+
+```xquery
+declare
+  %rest:path("/get.ttl")
+  %output:method("turtle")
+function turtle() as sem:triple* {
+  muh:triples()
+};
+
+declare
+  %rest:path("/get.n3")
+  %output:method("n3")
+function n3() as sem:triple* {
+  muh:triples()
+};
+
+declare
+  %rest:path("/get.xml")
+  %output:method("xml")
+  %output:encoding("iso-8859-1")
+  %output:indent("yes")
+  %output:media-type("application/special+xml")
+function get-xml() {
+  muh:xml()
+};
+```
