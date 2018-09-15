@@ -8,12 +8,12 @@ It's fast, scales and is light weight at around 1.1k lines of code. You can seam
 * Supports [Multi-Statement Transactions](http://consulting.xmllondon.com/xqrs/docs/multi-statement-transactions)
 * Supports [Multiple-File uploads from HTML5 Forms](http://consulting.xmllondon.com/xqrs/docs/form-file-uploads)
 * Supports [multipart/mixed requests](http://consulting.xmllondon.com/xqrs/docs/post-put-body#multipart-types)
-* Supports XML, JSON, RDF (all formats), SPARQL Results (all formats)
+* Supports [XML](http://consulting.xmllondon.com/xqrs/docs/output-serialization#xml), [JSON](http://consulting.xmllondon.com/xqrs/docs/output-serialization#json), [RDF](http://consulting.xmllondon.com/xqrs/docs/output-serialization#rdf) (all formats), [SPARQL Results](http://consulting.xmllondon.com/xqrs/docs/output-serialization#sparql) (all formats)
 * Supports [Path expressions defined by Regular Expressions](http://consulting.xmllondon.com/xqrs/docs/paths)
 * Supports [Content Negotiation and Quality Factors in Accept Headers](http://consulting.xmllondon.com/xqrs/docs/content-negotiation)
 * Well Documented with plenty of examples
 * Supports [Error Handler Functions](http://consulting.xmllondon.com/xqrs/docs/error-handling)
-* Very Robust. Built against a very rich Test Suite
+* Very Robust. Built against a very rich [Test Suite](https://github.com/cfoster/xqrs/tree/master/test-suite)
 * 100% Free, Open Source, Apache 2.0 Licence
 
 ## RESTXQ resource functions
