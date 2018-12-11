@@ -77,6 +77,10 @@ import module namespace function-mapping =
 import module namespace xquery30 =
   "/marklogic-tests/xquery3.0" at
   "test-suite/xqy/marklogic/xquery30.xq";
+  
+import module namespace session-testing =
+  "/marklogic-tests/session-testing" at
+  "test-suite/xqy/marklogic/session-testing.xq";
 
 import module namespace consumes-annotation =
   "/spec/resource/function/consumes-annotation" at
@@ -123,6 +127,10 @@ import module namespace tx =
   "http://xmllondon.com/xquery/transaction" at
   "optional-libraries/transaction.xq";
   
+import module namespace session =
+  "http://xmllondon.com/xquery/session" at
+  "optional-libraries/session.xq";
+
 import module namespace restxq-function-module =
   "http://exquery.org/ns/restxq" at
   "optional-libraries/restxq-function-module.xq";

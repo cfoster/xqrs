@@ -1,7 +1,7 @@
 (:
  : XQuery API for RESTful Web Services (XQRS)
  :
- : Version: 1.0
+ : Version: 1.0.1
  : Author: Charles Foster
  :  
  : Copyright 2018 XML London Limited. All rights reserved.
@@ -105,8 +105,7 @@ declare variable $output-method-default-mime-types := map:new((
   map:with("xml", "text/xml")
 ));
   
-declare variable $rdf-mime-to-method :=
-  rest:inverse-map($output-method-rdf-mime-types);
+declare variable $rdf-mime-to-method := -$output-method-rdf-mime-types;
   
 declare variable $default-value-extractors :=
   rest:value-from-path#2, rest:value-from-query-param#2,
@@ -133,10 +132,6 @@ declare function rest:occurrence($sequence-type as xs:string) as xs:integer {
 declare function rest:parse-type($sequence-type as xs:string) as map:map {
   map:entry('cardinality', rest:occurrence($sequence-type)) =>
   map:with('item-type', replace($sequence-type, '[\?\+\*]$', ''))
-};
-
-declare function rest:inverse-map($map as map:map) as map:map {
-  map:new(map:keys($map) ! map:entry(map:get($map, .), .))
 };
 
 declare function rest:matches-error(
@@ -635,17 +630,15 @@ declare function rest:apply($function as function(*), $map as map:map) {
   }
 
   let $response :=
+    if($tx-boundary) then $func()
+    else
     xdmp:invoke-function(
       $func,
-      <options xmlns="xdmp:eval">
-        {
-          if($tx-boundary) then ( )
-          else if($XQRSSessionID) then
-          (
+      <options xmlns="xdmp:eval">{
+          if($XQRSSessionID) then (
             <transaction-id>{$XQRSSessionID}</transaction-id>
           )
-          else
-          (
+          else (
             <update>{$update}</update>,
             <commit>{$commit}</commit>
           )
@@ -1127,11 +1120,14 @@ if($invoking-function-name) then
 else
 (
   let $xqrs :=
-    xdmp:set-server-field('xqrs',
-        map:entry('functions', xdmp:functions()[
-          xdmp:annotation(., xs:QName("rest:path"))]
-        )
+    map:entry('functions', xdmp:functions()[
+      xdmp:annotation(., xs:QName("rest:path"))]
     )
+
+  let $_ :=
+    if(xdmp:has-privilege(
+      "http://marklogic.com/xdmp/privileges/xdmp-set-server-field", "execute"))
+    then xdmp:set-server-field('xqrs', $xqrs) else ()
     
   let $function-to-invoke :=
     try {

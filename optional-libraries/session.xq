@@ -4,7 +4,7 @@ xquery version "1.0-ml";
  : Session Module
  :
  : This is a working example of how to perform application level authentication
- : with XQRS, you are free change how this works to suit your needs.
+ : with XQRS. You are free to change how this works to suit your needs.
  :
  : Version: 1.0
  : Author: Charles Foster
