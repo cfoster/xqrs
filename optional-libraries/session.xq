@@ -1,5 +1,3 @@
-xquery version "1.0-ml";
-
 (:
  : Session Module
  :
