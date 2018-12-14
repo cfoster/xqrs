@@ -1,7 +1,7 @@
 (:
  : XQuery API for RESTful Web Services (XQRS)
  :
- : Version: 1.0.1
+ : Version: 1.0.2
  : Author: Charles Foster
  :  
  : Copyright 2018 XML London Limited. All rights reserved.
@@ -848,13 +848,8 @@ declare function rest:serialization-parameter-map(
 };
 
 declare function rest:camel-case($input as xs:string) as xs:string {
-  string-join(
-    let $tokens := fn:tokenize(lower-case($input), '-')
-    for $token at $index in $tokens
-    return
-    if($index = 1) then $token
-    else upper-case(substring($token, 1, 1)) || lower-case(substring($token, 2))
-  )
+  let $tokens := fn:tokenize(lower-case($input), '-')
+  return string-join((fn:head($tokens), fn:tail($tokens) ! xdmp:initcap(.)))
 };
 
 declare function rest:serialize-sparql-results(
