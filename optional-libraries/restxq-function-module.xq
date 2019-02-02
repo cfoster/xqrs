@@ -6,7 +6,7 @@ function rest:resource-functions()
   as document-node(element(rest:resource-functions)) {
   document {
     <rest:resource-functions>{
-    for $function in map:get(xdmp:get-server-field("restxq"), "functions")
+    for $function in map:get(xdmp:get-server-field("xqrs"), "functions")
     let $function-name as xs:QName := xdmp:function-name($function)
     return
       <rest:resource-function>

@@ -47,6 +47,8 @@
               <xsl:value-of select="(code, message)[normalize-space()][1]" />
             </xsl:if>
           </h1>
+
+          <xsl:apply-templates select="format-string"/>
           
           <xsl:if test="$xqrs-internal-error">
             <p>
@@ -95,6 +97,12 @@
       </body>
       
     </html>
+  </xsl:template>
+  
+  <xsl:template match="format-string">
+    <h3>
+      <xsl:apply-templates />
+    </h3>
   </xsl:template>
   
   <xsl:template match="stack">
@@ -210,72 +218,6 @@
       </td>
     </tr>
   </xsl:template>
-  <!--
-    <error:frame>
-      <error:uri>/rest.xq</error:uri>
-      <error:line>854</error:line>
-      <error:column>4</error:column>
-      <error:operation>local:apply(simple-error#2, map:map(&lt;map:map
-        xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        .../&gt;))</error:operation>
-      <error:variables>
-        <error:variable>
-          <error:name xmlns="">function</error:name>
-          <error:value>simple-error#2</error:value>
-        </error:variable>
-        <error:variable>
-          <error:name xmlns="">map</error:name>
-          <error:value>map:map(&lt;map:map
-            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            .../&gt;)</error:value>
-        </error:variable>
-        <error:variable>
-          <error:name xmlns="">is-updating</error:name>
-          <error:value>fn:false()</error:value>
-        </error:variable>
-        <error:variable>
-          <error:name xmlns="">cookie-map</error:name>
-          <error:value>map:map()</error:value>
-        </error:variable>
-        <error:variable>
-          <error:name xmlns="">RestXQSessionID</error:name>
-          <error:value>()</error:value>
-        </error:variable>
-        <error:variable>
-          <error:name xmlns="">tx-boundary</error:name>
-          <error:value>fn:false()</error:value>
-        </error:variable>
-        <error:variable>
-          <error:name xmlns="">update</error:name>
-          <error:value>fn:false()</error:value>
-        </error:variable>
-        <error:variable>
-          <error:name xmlns="">commit</error:name>
-          <error:value>"auto"</error:value>
-        </error:variable>
-        <error:variable>
-          <error:name xmlns="">v</error:name>
-          <error:value>()</error:value>
-        </error:variable>
-        <error:variable>
-          <error:name xmlns="">v</error:name>
-          <error:value>function(xs:integer) as item()*</error:value>
-        </error:variable>
-        <error:variable>
-          <error:name xmlns="">arity</error:name>
-          <error:value>2</error:value>
-        </error:variable>
-        <error:variable>
-          <error:name xmlns="">func</error:name>
-          <error:value>function() as item()*</error:value>
-        </error:variable>
-      </error:variables>
-      <error:xquery-version>1.0-ml</error:xquery-version>
-    </error:frame>
-
-    -->
   
   <xsl:function name="xqrs:css" as="text()">
     <xsl:text>

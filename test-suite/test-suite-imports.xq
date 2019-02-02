@@ -134,4 +134,8 @@ import module namespace session =
 import module namespace restxq-function-module =
   "http://exquery.org/ns/restxq" at
   "optional-libraries/restxq-function-module.xq";
+  
+import module namespace xqrs-functions =
+  "http://xmllondon.com/xquery/xqrs-functions" at
+  "optional-libraries/xqrs-functions.xq";  
 (: -------------------------- :)

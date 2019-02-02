@@ -15,5 +15,6 @@ lazy val projectDependencies = Seq(
   "io.gatling.highcharts"           % "gatling-charts-highcharts"   % "2.3.0"          % "test,it",
   "io.gatling"                      % "gatling-test-framework"      % "2.3.0"          % "test,it",
   "org.apache.jena"                 % "apache-jena-libs"            % "3.8.0"          % "test,it",
-  "net.sf.saxon"                    % "Saxon-HE"                    % "9.8.0-12"       % "test,it"
+  "net.sf.saxon"                    % "Saxon-HE"                    % "9.8.0-12"       % "test,it",
+  "nu.validator"                    % "jing"                        % "20180722VNU"    % "test,it"
 )

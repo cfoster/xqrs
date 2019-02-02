@@ -1,0 +1,114 @@
+# XQRS-Functions RelaxNG Schema
+# Copyright (c) 2019 XML London Limited
+
+default namespace = "http://xmllondon.com/xquery/xqrs-functions"
+namespace output = "http://www.w3.org/2010/xslt-xquery-serialization"
+
+maps-to-variable =
+  attribute maps-to-variable { xsd:NCName }
+
+param-block = 
+  maps-to-variable,
+  attribute required { xsd:boolean }?,
+  name,
+  type,
+  default-value?
+
+cardinality =
+  attribute cardinality {
+    "zero-or-one" | "one-or-more" | "zero-or-more" | "exactly-one"
+  }?
+  
+output-properties =
+  element output:method {
+    "xml" | "html" | "xhtml" | "text" | "json" | "n3" | "nquad" | "ntriple" |
+    "rdfjson" | "rdfxml" | "trig" | "triplexml" | "turtle" |
+    "sparql-results-xml" | "sparql-results-json" | "sparql-results-csv"
+  }?,
+  element output:encoding { text }?,
+  element output:output-encoding { text }?,
+  element output:item-separator { text }?,
+  element output:media-type { text }?,
+  element output:byte-order-mark { "yes" | "no" }?,
+  element output:output-sgml-character-entities {
+    "normal" | "none" | "math" | "pub"
+  }?,
+  element output:cdata-section-elements { text }?,
+  element output:use-character-maps {
+    "xdmp:sgml-entities-normal" |
+    "xdmp:sgml-entities-math" |
+    "xdmp:sgml-entities-pub"
+  }?,
+  element output:indent { "yes" | "no" }?,
+  element output:indent-untyped { "yes" | "no" }?,
+  element output:indent-tabs { "yes" | "no" }?,
+  element output:include-content-type { "yes" | "no" }?,
+  element output:escape-uri-attributes { "yes" | "no" }?,
+  element output:doctype-public { text }?,
+  element output:doctype-system { text }?,
+  element output:omit-xml-declaration { "yes" | "no" }?,
+  element output:standalone { "yes" | "no" }?,
+  element output:normalization-form { "NFC" | "NFD" | "NFKD" }?,
+  element output:default-attributes { "yes" | "no" }?
+  
+name = element name { xsd:NCName }
+type = element type { typeBlock }
+typeBlock = cardinality, text 
+
+default-value =
+  element default-value {
+    (
+      attribute type { "sequence" },
+      element sequence {
+        element item {
+          attribute type { xsd:NMTOKEN },
+          text
+         }+
+       }
+    ) |
+    (
+      attribute type { xsd:NMTOKEN },
+      text
+    )
+  }
+  
+start =
+  element functions {
+    attribute base-url { xsd:anyURI },
+    element function {
+      attribute arity { xsd:integer },
+      attribute local-name { xsd:NCName },
+      attribute namespace { xsd:anyURI },
+      element path {
+        attribute uri { text }, (
+          element segment { xsd:NMTOKEN } |
+          element variable-segment {
+            maps-to-variable,
+            attribute regex { text }?,
+            attribute type { xsd:anyURI }
+          }
+        )+
+      },
+      
+      element method {
+        maps-to-variable?,
+        attribute name {
+          "GET" | "HEAD" | "POST" | "PUT" | "DELETE" |
+          "OPTIONS" | "PATCH" | "CONNECT" | "TRACE"
+        },
+        type?
+      }?,
+
+      output-properties,       
+
+      element query-parameters { element query-parameter { param-block } }*,
+      element form-parameters { element form-parameter { param-block } }*,
+      element header-parameters { element header-parameter { param-block } }*,
+      element cookie-parameters { element cookie-parameter { param-block } }*,
+      element error-parameters { element error-parameter { param-block } }*,
+      
+      element consumes { text }*,
+      element produces { text }*,
+      element return-type { typeBlock }?
+    }+
+  }
