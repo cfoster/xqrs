@@ -43,6 +43,7 @@ function xqrs-functions:export() as document-node(element(functions)) {
     <functions
       xmlns:xs="http://www.w3.org/2001/XMLSchema"
       xmlns:output="http://www.w3.org/2010/xslt-xquery-serialization"
+      xmlns:xdmp="http://marklogic.com/xdmp"
       base-url="{
         xdmp:get-request-protocol() || "://" || xdmp:get-request-header('host')
       }">{
@@ -88,6 +89,18 @@ declare function item-element($value as item()) as element(item) {
   }
 };
 
+declare function tx-boundary($i as item()) as element(xdmp:tx-boundary) {
+  element xdmp:tx-boundary {
+    if(fn:not($i instance of xs:boolean)) then $i else ()
+  }
+};
+
+declare function update($i as item()) as element(xdmp:update) {
+  element xdmp:update {
+    if(fn:not($i instance of xs:boolean)) then $i else ()
+  }
+};
+
 declare function output-props($function as function(*), $key as xs:string) {
   let $ann := xdmp:annotation($function, xs:QName('output:' || $key))
   where fn:exists($ann) and not($ann[1] instance of xs:boolean)
@@ -118,10 +131,12 @@ declare function xqrs-function($function as function(*)) {
       }</path>,
       
       method($function, $http-methods),
+      parameters($function, $params),
       consumes(ann($function, 'consumes')[with-values(.)]),
       produces(ann($function, 'produces')[with-values(.)]),
-      parameters($function, $params),
       output-props($function, $output),
+      tx-boundary(xdmp:annotation($function, xs:QName('xdmp:tx-boundary'))),
+      update(xdmp:annotation($function, xs:QName('xdmp:update'))),
       return-type(xdmp:function-return-type($function)[. != "item()*"])
     }
   </function>

@@ -2,7 +2,8 @@
 # Copyright (c) 2019 XML London Limited
 
 default namespace = "http://xmllondon.com/xquery/xqrs-functions"
-namespace output = "http://www.w3.org/2010/xslt-xquery-serialization"
+namespace output  = "http://www.w3.org/2010/xslt-xquery-serialization"
+namespace xdmp    = "http://marklogic.com/xdmp"
 
 maps-to-variable =
   attribute maps-to-variable { xsd:NCName }
@@ -99,8 +100,6 @@ start =
         type?
       }?,
 
-      output-properties,       
-
       element query-parameters { element query-parameter { param-block } }*,
       element form-parameters { element form-parameter { param-block } }*,
       element header-parameters { element header-parameter { param-block } }*,
@@ -109,6 +108,12 @@ start =
       
       element consumes { text }*,
       element produces { text }*,
+      
+      output-properties,
+      
+      element xdmp:tx-boundary { text? }?,
+      element xdmp:update { ("true" | "false" | "auto")? }?,
+
       element return-type { typeBlock }?
     }+
   }
