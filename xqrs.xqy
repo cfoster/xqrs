@@ -1,7 +1,7 @@
 (:
  : XQuery API for RESTful Web Services (XQRS)
  :
- : Version: 1.0.2
+ : Version: 1.0.3
  : Author: Charles Foster
  :  
  : Copyright 2019 XML London Limited. All rights reserved.
