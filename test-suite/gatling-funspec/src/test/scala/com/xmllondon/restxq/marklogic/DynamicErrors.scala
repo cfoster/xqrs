@@ -194,6 +194,36 @@ class DynamicErrors extends RestXQBaseClass {
   }
 
   spec {
+    http("Form Param (gb) - XQRS003")
+      .post("/marklogic/error/form-param/5/gb")
+      .header("Content-Type", "application/x-www-form-urlencoded")
+      .formParam("name", "")
+      .formParam("message", "")
+      .check(status is 400)
+      .check(regex("XQRS003"))
+  }
+
+  spec {
+    http("Form Param (gb) - XQRS003")
+      .post("/marklogic/error/form-param/5/gb")
+      .header("Content-Type", "application/x-www-form-urlencoded")
+      .formParam("name", "John+Smith")
+      .formParam("message", "")
+      .check(status is 400)
+      .check(regex("XQRS003"))
+  }
+
+  spec {
+    http("Form Param (gb) - XQRS003")
+      .post("/marklogic/error/form-param/5/gb")
+      .header("Content-Type", "application/x-www-form-urlencoded")
+      .formParam("name", "John Smith")
+      .formParam("message", "Hello World")
+      .check(status is 200)
+      .check(regex("gb,John Smith,Hello World"))
+  }
+
+  spec {
     http("Cookie Param (1) - XQRS007")
       .get("/marklogic/error/cookie-param/1/a")
       .check(status is 400)

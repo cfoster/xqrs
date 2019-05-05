@@ -205,6 +205,14 @@ declare
 %rest:form-param('a', '{$a}')
 function form-param-5a($b as xs:string) { $b };
 
+declare
+  %rest:path("/marklogic/error/form-param/5/gb")
+  %rest:form-param-1("name", "{$name}")
+  %rest:form-param-2("message", "{$message}")
+function sign-gb($name as xs:string, $message as xs:string) {
+  string-join(('gb', $name, $message), ',')
+};
+
 (:
   %rest:cookie-param
   1. If present, cardinality of parameters must be 2 or more
