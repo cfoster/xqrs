@@ -351,13 +351,23 @@ tr.even {
           select="xdmp:filesystem-file(concat(xdmp:modules-root(), '/', $uri))"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:sequence select="
-          xdmp:eval(
-          'declare variable $uri as xs:string external; fn:unparsed-text($uri)',
-            map:entry('uri', $uri),
-            map:entry('database', xdmp:modules-database())
-          )
-          "/>
+        <xsl:variable name="eval-options" as="element()">
+          <options xmlns="xdmp:eval">
+            <database>
+              <xsl:value-of select="xdmp:modules-database()"/>
+            </database>
+            <default-xquery-version>1.0-ml</default-xquery-version>
+          </options>
+        </xsl:variable>
+        <xsl:if test="exists($uri)">
+          <xsl:sequence select="
+            xdmp:eval(
+              'declare variable $uri as xs:string external; fn:unparsed-text($uri)',
+              (fn:QName('','uri'), $uri),
+              $eval-options
+            )
+            "/>
+        </xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
